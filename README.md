@@ -66,6 +66,10 @@ We can define limits on cardinality for our monitors and get information about t
 kubectl -n resource-state-metrics get ResourceMetricsMonitor provider-health -o json | jq '.status.cardinality'
 ```
 
+Here's an example of a cardinality limit being set for one of our monitors:
+
+https://github.com/crossplane-contrib/resource-state-metrics/blob/main/examples/metrics/eks/cardinality-limits.yaml
+
 ## Parent correlation
 
 We can monitor metadata on each object to then use as information to connect parent XRs and their child composed resources:
