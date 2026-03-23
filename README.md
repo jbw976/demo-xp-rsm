@@ -36,6 +36,13 @@ admin
 echo $(kubectl get secret --namespace monitoring -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode)
 ```
 
+## Examine the control plane resources
+
+First, let's check all the resources that are managed by our control plane:
+```
+kubectl get managed -A
+```
+
 ## Examine the dashboard
 From the Grafana dashboards list, open the `Crossplane Resource State Metrics` dashboard. There are many interesting metrics to browse, like:
 
