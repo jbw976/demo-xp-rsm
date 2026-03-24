@@ -10,18 +10,19 @@ git clone https://github.com/crossplane-contrib/resource-state-metrics.git
 cd resource-state-metrics
 ```
 
-## Configure control plane
+## Create resources
 
-Start the repo with `make local APPLY_METRICS=false`, which will pull all the
-providers, functions, configurations, etc. and install them in the control
-plane, but not yet create the `ResourceMetricsMonitors` or EKS clusters.
+Start the repo with `make local` which will create all the essential
+infrastructure, install the resource state metrics configuration package, create
+multiple EKS clusters, and start monitoring everything with
+`ResourceMetricsMonitors`.
 
 This pulls/downloads a lot of packages and containers, so it's wise to do this
 and let it finish before using conference wifi.
 
 ```
 export AWS_CLOUD_CREDENTIALS="$(cat ~/.aws/credentials)"
-make local APPLY_METRICS=false
+make local
 ```
 
 After everything has been set up, start a port forward to the grafana server:
@@ -33,17 +34,6 @@ Go to the Grafana dashboard at http://localhost:3000 and loging using these cred
 ```
 admin
 echo $(kubectl get secret --namespace monitoring -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode)
-```
-
-## Create resources to monitor
-
-This step requires much less bandwidth, so it can be performed on a less stable
-internet connection. It will create the EKS clusters and cloud infrastructure
-that we'll monitor and also create the `ResourceMetricsMonitors` to start
-monitoring.
-
-```
-make local-metrics
 ```
 
 ## Examine the control plane resources
